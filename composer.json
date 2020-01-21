@@ -1,0 +1,26 @@
+{
+    "name": "azonmedia/vue-router",
+    "type": "library",
+    "description": "Create and dump Vue routes from PHP",
+    "keywords": ["vue router"],
+    "homepage": "https://github.com/AzonMedia/module-vue-router",
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Vesko Kenashkov",
+            "email": "kenashkov@azonmedia.com",
+            "homepage": "http://azonmedia.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "azonmedia/components": "dev-master",
+        "php": ">=7.2.0",
+        "azonmedia/utilities": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "Azonmedia\\VueRouter\\": "src/"
+        }
+    }
+}
