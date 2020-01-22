@@ -235,25 +235,27 @@ class VueRoute implements \ArrayAccess
         if (!empty($this->additional['meta'])) {
             $meta_str = PHP_EOL.'meta: {'.PHP_EOL;
             foreach ($this->additional['meta'] as $key=>$value) {
-                $meta_str .= "'$key': '$value',".PHP_EOL;
+                $meta_str .= AlphaNumUtil::indent("'$key': '$value',").PHP_EOL;
             }
             $meta_str .= '}';
+            $meta_str = AlphaNumUtil::indent($meta_str);
         } else {
             $meta_str = '';
         }
         if (!empty($this->additional['props'])) {
             $props_str = PHP_EOL.'props: {'.PHP_EOL;
             foreach ($this->additional['props'] as $key=>$value) {
-                $props_str .= "'$key': '$value',".PHP_EOL;
+                $props_str .= AlphaNumUtil::indent("'$key': '$value',").PHP_EOL;
             }
             $props_str .= '}';
+            $props_str = AlphaNumUtil::indent($props_str);
         } else {
             $props_str = '';
         }
 
         if ($this->children) {
             $children = $this->children;
-            usort($children, fn(VueRoute $VueRoute1, VueRoute $VueRoute2) : int => $VueRoute1->get_order() < $VueRoute2->get_order() ? -1 : 1 );
+            usort($children, fn(VueRoute $VueRoute1, VueRoute $VueRoute2) : int => $VueRoute1->get_order() <=> $VueRoute2->get_order() );
             $children_str = PHP_EOL.'children: ['.PHP_EOL;
             foreach ($children as $VueRoute) {
                 $children_str .= AlphaNumUtil::indent($VueRoute).PHP_EOL;

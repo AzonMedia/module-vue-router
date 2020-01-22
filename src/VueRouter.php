@@ -123,7 +123,7 @@ class VueRouter
         //the Vue router expects the first level of nodes to be printed in an array
         $ret = 'export default ['.PHP_EOL;
         $children = $this->RootVueRoute->get_children();
-        usort($children, fn(VueRoute $VueRoute1, VueRoute $VueRoute2) : int => $VueRoute1->get_order() < $VueRoute2->get_order() ? -1 : 1 );
+        usort($children, fn(VueRoute $VueRoute1, VueRoute $VueRoute2) : int => $VueRoute1->get_order() <=> $VueRoute2->get_order() );
         foreach ($children as $VueRoute) {
             $ret .= AlphaNumUtil::indent((string) $VueRoute).PHP_EOL;
         }
@@ -149,13 +149,18 @@ class VueRouter
         return $this->routes_dumped_flag;
     }
 
+    public function set_routes_dumped(bool $flag) : void
+    {
+        $this->routes_dumped_flag = $flag;
+    }
+
     /**
      * Dumps the routes to the $router_file provided in the constructor
      */
     public function dump_routes() : void
     {
-        $this->routes_dumped_flag = TRUE;
-        $routes_str = $this->get_routes_as_string();
+        $this->set_routes_dumped(TRUE);
+        $routes_str = $this->as_string();
         file_put_contents($this->get_router_file(), $routes_str);//replace the old file
     }
 }
