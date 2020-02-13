@@ -115,6 +115,15 @@ class VueRouter
     }
 
     /**
+     * Returns the top level routes
+     * @return array
+     */
+    public function get_children() : array
+    {
+        return $this->RootVueRoute->get_children();
+    }
+
+    /**
      * Returns the routes as string.
      * @return string
      */
