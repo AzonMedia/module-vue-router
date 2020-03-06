@@ -28,7 +28,7 @@ class VueRouter
     {
         $this->router_file = $router_file;
         //$this->RootVueRoute = new VueRoute( NULL, '/', 'root', 'dummy root node' );//this is the route node
-        $this->RootVueRoute = new VueRoute( '/', 'root');//this is the route node
+        $this->RootVueRoute = new VueRoute( '/', 'root');//this is the route node - just a holder node
     }
 
     public function __toString()
@@ -124,7 +124,7 @@ class VueRouter
     }
 
     /**
-     * Returns the routes as string.
+     * Returns the routes as string sutable for use by Vue.
      * @return string
      */
     public function as_string() : string
@@ -138,6 +138,30 @@ class VueRouter
         }
         $ret .= '];';
         return $ret;
+    }
+
+    /**
+     * Returns an indexed array with all routes
+     * @return array
+     */
+    public function get_routes_as_array() : array
+    {
+        $Function = static function(string $parent_route, VueRoute $Route) use (&$Function) : array
+        {
+            $ret = [];
+            $path = $Route->get_path();
+            if ($parent_route === '/' && $path[0] === '/') {
+                $ret[] = $path;
+            } else {
+                $ret[] = $parent_route.'/'.$path;
+            }
+
+            foreach ($Route->get_children() as $Route) {
+                $ret = [...$ret, ...$Function($path, $Route)];
+            }
+            return array_values(array_unique($ret));
+        };
+        return $Function('/', $this->RootVueRoute);
     }
 
     /**
