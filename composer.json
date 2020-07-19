@@ -4,7 +4,7 @@
     "description": "Create and dump Vue routes from PHP",
     "keywords": ["vue router"],
     "homepage": "https://github.com/AzonMedia/module-vue-router",
-    "license": "BSD-3-Clause",
+    "license": "MIT",
     "authors": [
         {
             "name": "Vesko Kenashkov",
